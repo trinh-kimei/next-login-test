@@ -230,8 +230,8 @@ const SignIn: NextPageWithLayout = ({ providers }: any) => {
     );
 };
 
-export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
-    const { query, req, res } = context;
+export async function getServerSideProps (context: { query: any; req: any; }) {
+    const { query, req } = context;
     let error = '';
     if (query.error) {
         error = query.error;
@@ -240,8 +240,10 @@ export async function getServerSideProps (context: { query: any; req: any; res: 
     try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken({ req, secret });
+        if (token) {
+            return { props: { providers: await getProviders(), loginError: error } };
+        }
 
-        return { props: { providers: await getProviders(), loginError: error } };
     } catch (e) {
         return { props: { providers: await getProviders(), loginError: error } };
     }
