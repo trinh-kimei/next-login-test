@@ -22,7 +22,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
-// import { getToken } from 'next-auth/jwt';
+import { getToken } from 'next-auth/jwt';
 import { blue } from '@mui/material/colors';
 import * as React from 'react';
 import { NextPageWithLayout } from './_app';
@@ -231,15 +231,15 @@ const SignIn: NextPageWithLayout = ({ providers }: any) => {
 };
 
 export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
-    const { query } = context;
+    const { query, req, res } = context;
     let error = '';
     if (query.error) {
         error = query.error;
     }
 
     try {
-        // const secret = process.env.NEXTAUTH_SECRET;
-        // const token = await getToken({ req, secret });
+        const secret = process.env.NEXTAUTH_SECRET;
+        const token = await getToken({ req, secret });
 
         return { props: { providers: await getProviders(), loginError: error } };
     } catch (e) {
