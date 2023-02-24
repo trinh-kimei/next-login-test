@@ -10,7 +10,7 @@ import TranslateHelper from '../components/helpers/TranslateHelper';
 import MasterLayout from '../components/containers/MasterLayout';
 import PublicLayout from '../components/containers/Layout/PublicLayout';
 
-const Login: NextPageWithLayout = ({ providers }: any) => {
+const Login: NextPageWithLayout = ({ providers }: any, { loginError }: any) => {
     const renderIcon = (name: string) => {
         switch (name) {
             case 'Google':
@@ -48,17 +48,15 @@ const Login: NextPageWithLayout = ({ providers }: any) => {
     );
 };
 
-export async function getServerSideProps (context: any) {
-    // eslint-disable-next-line no-unused-vars
+export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
     const { query, req, res } = context;
     let error = '';
-    if (query.error) {
-        error = query.error;
+    if(Boolean(query.error)) {
+        error = query.error
     }
 
     try {
         const secret = process.env.NEXTAUTH_SECRET;
-        // eslint-disable-next-line no-unused-vars
         const token = await getToken({ req, secret });
 
         return { props: { providers: await getProviders(), loginError: error } };
@@ -66,6 +64,7 @@ export async function getServerSideProps (context: any) {
         return { props: { providers: await getProviders(), loginError: error } };
     }
 }
+
 Login.getLayout = function getLayout (page: ReactElement) {
     return (
         <MasterLayout>
