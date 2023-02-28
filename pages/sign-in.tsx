@@ -231,7 +231,7 @@ const SignIn: NextPageWithLayout = ({ providers }: any) => {
 };
 
 export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
-    const { req } = context;
+    // const { req } = context;
     try {
         // const secret = process.env.NEXTAUTH_SECRET;
         // const token = await getToken({ req, secret });
