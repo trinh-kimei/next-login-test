@@ -30,7 +30,7 @@ import MasterLayout from '../components/containers/MasterLayout';
 import PublicLayout from '../components/containers/Layout/PublicLayout';
 
 
-const SignIn: NextPageWithLayout = ({ providers }: any, { loginError }: any) => {
+const SignIn: NextPageWithLayout = ({ providers }: any) => {
     const router = useRouter();
 
     const [values, setValues] = useState({
@@ -232,18 +232,18 @@ const SignIn: NextPageWithLayout = ({ providers }: any, { loginError }: any) => 
 
 export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
     const { query, req, res } = context;
-    let error = '';
-    if(Boolean(query.error)) {
-        error = query.error
-    }
+    // let error = '';
+    // if(Boolean(query.error)) {
+    //     error = query.error
+    // }
 
     try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken({ req, secret });
 
-        return { props: { providers: await getProviders(), loginError: error } };
+        return { props: { providers: await getProviders()} };
     } catch (e) {
-        return { props: { providers: await getProviders(), loginError: error } };
+        return { props: { providers: await getProviders() } };
     }
 }
 SignIn.getLayout = function getLayout (page: ReactElement) {
