@@ -48,12 +48,8 @@ const Login: NextPageWithLayout = ({ providers }: any, { loginError }: any) => {
     );
 };
 
-export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
-    // const { req } = context;
+export async function getServerSideProps () {
     try {
-        // const secret = process.env.NEXTAUTH_SECRET;
-        // const token = await getToken({ req, secret });
-
         return { props: { providers: await getProviders() } };
     } catch (e) {
         return { props: { providers: await getProviders() } };
