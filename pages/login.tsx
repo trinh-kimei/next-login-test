@@ -49,11 +49,7 @@ const Login: NextPageWithLayout = ({ providers }: any, { loginError }: any) => {
 };
 
 export async function getServerSideProps () {
-    try {
-        return { props: { providers: await getProviders() } };
-    } catch (e) {
-        return { props: { providers: await getProviders() } };
-    }
+    return { props: { providers: await getProviders()} };
 }
 
 Login.getLayout = function getLayout (page: ReactElement) {

@@ -231,15 +231,7 @@ const SignIn: NextPageWithLayout = ({ providers }: any) => {
 };
 
 export async function getServerSideProps (context: { query: any; req: any; res: any; }) {
-    // const { req } = context;
-    try {
-        // const secret = process.env.NEXTAUTH_SECRET;
-        // const token = await getToken({ req, secret });
-
-        return { props: { providers: await getProviders()} };
-    } catch (e) {
-        return { props: { providers: await getProviders() } };
-    }
+    return { props: { providers: await getProviders()} };
 }
 SignIn.getLayout = function getLayout (page: ReactElement) {
     return (
